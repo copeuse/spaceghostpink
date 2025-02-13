@@ -1,3 +1,4 @@
-section.presentation {
+section.body {
   background: url('../prune_images/thumbnailPrune.png');
+  background-size: cover;
 }
