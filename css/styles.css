@@ -1,4 +1,5 @@
 section.body {
   background: url('../prune_images/thumbnailPrune.png');
   background-size: cover;
+  width: 1000px;
 }
