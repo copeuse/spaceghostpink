@@ -1,3 +1,4 @@
-/* section.presentation {
-  background: url('../prune_images/thumbnailPrune.png');
-} */
+section.presentation {
+  width: 637px
+  /*background: url('../prune_images/thumbnailPrune.png');*/
+}
