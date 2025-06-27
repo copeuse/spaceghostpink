@@ -1,17 +1,17 @@
-/* Reset de base */
+/* Réinitialisation de base */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
     width: 100%;
+    font-family: sans-serif;
 }
 
-/* Corps centré */
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+/* Images adaptatives */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* Conteneur principal */
@@ -19,37 +19,47 @@ section.yahou {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem; /* espace entre les deux lignes */
-    padding: 2rem;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
 }
 
-/* Menus avec disposition côte à côte */
+/* Menu horizontal par défaut */
 section.menu,
 section.menu2 {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 2rem; /* espace entre les icônes */
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
-/* Chaque bloc d’icône */
-section.menu div,
-section.menu2 div {
-    flex: 0 0 auto;
+/* Espacement entre les éléments */
+div.note,
+div.trefle,
+div.like,
+div.contact {
+    margin: 0.5rem;
 }
 
-/* Images adaptatives */
-img {
-    max-width: 100px;
-    height: auto;
-    display: block;
-}
-
-/* Responsive : passe en 1 par ligne sur petit écran */
-@media (max-width: 480px) {
+/* Responsive design pour mobile */
+@media (max-width: 768px) {
     section.menu,
     section.menu2 {
         flex-direction: column;
-        gap: 1.5rem;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    div.note,
+    div.trefle,
+    div.like,
+    div.contact {
+        margin: 0.5rem 0;
+    }
+
+    section.yahou {
+        padding: 0.5rem;
     }
 }
