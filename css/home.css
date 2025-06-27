@@ -1,45 +1,65 @@
+/* Réinitialisation de base */
 html, body {
     margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
+    font-family: sans-serif;
 }
 
+/* Images adaptatives */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Conteneur principal */
 section.yahou {
-    align-content: center;
-    margin-top: -350px;
-    margin-left: -275px;
-}
-
-section.menu {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    margin-top: 500px;
-    margin-left: 30px;
+    min-height: 100vh;
+    padding: 1rem;
 }
 
+/* Menu horizontal par défaut */
+section.menu,
 section.menu2 {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 100px;
-}
-div.note {
-    margin-right: 80px;
-}
-
-div.trefle {
-    margin-right: 10px;
-    margin-left: 30px;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
-div.like {
-    margin-top: 30px;
-    margin-right: 70px;
-    margin-left: 30px;
-}
-
+/* Espacement entre les éléments */
+div.note,
+div.trefle,
+div.like,
 div.contact {
-    margin-top: 30px;
-    margin-left: 80px;
+    margin: 0.5rem;
+}
+
+/* Responsive design pour mobile */
+@media (max-width: 768px) {
+    section.menu,
+    section.menu2 {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    div.note,
+    div.trefle,
+    div.like,
+    div.contact {
+        margin: 0.5rem 0;
+    }
+
+    section.yahou {
+        padding: 0.5rem;
+    }
 }
