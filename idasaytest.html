@@ -1,0 +1,64 @@
+<p id="idasay-ascii" style="text-align: left; white-space: pre; margin-top: 100px;"></p>
+
+<script>
+  const baseAscii = `
+　　　　  /￣＞￣￣フ Idasay triste car no croquettes......
+　　　　　| 　_　 _l  
+ 　 　　　／\` ミ＿xノ 
+　　 　  / 　　   |        QU'ON LUI SERVE SES CROQUETTES ET VITE! 
+　　 　 /  ヽ  　 ﾉ 
+ 　 　 /　　|　|　| 
+ 　／￣|    |　|　|    
+　| (￣ヽ＿__ヽ_)__)     
+{BOL}
+ 　＼二つ
+`;
+
+  const snacks = ["●", "🍪", "🐟", "🥩", "🍖", "🦴", "🥐", "🍣", "🍤", "🥚"];
+  let croquetteList = [];
+
+  function renderAscii() {
+    const lines = [];
+    const bolContent = croquetteList.slice(0, 3).join(" ");
+    let bolLine = "\\" + bolContent + "/";
+
+    let remaining = croquetteList.slice(3); // après le bol
+    let rowSize = 1;
+    let pyramidRows = [];
+
+    // on limite à 4 étages max
+    for (let level = 1; level <= 4; level++) {
+      if (remaining.length === 0) break;
+
+      const row = remaining.slice(0, rowSize);
+      remaining = remaining.slice(rowSize);
+
+      // indentation pour aligner la pyramide
+      const indent = " ".repeat((4 - level) * 2 + 2);
+      pyramidRows.unshift(indent + row.join(" "));
+      rowSize++;
+    }
+
+    // débordement après 4 étages → va à droite du bol
+    if (remaining.length > 0) {
+      bolLine += remaining.join(" ");
+    }
+
+    // assemble : pyramide puis bol
+    pyramidRows.push(bolLine);
+    const ascii = baseAscii.replace("{BOL}", pyramidRows.join("\n"));
+    document.getElementById("idasay-ascii").textContent = ascii;
+  }
+
+  function addCroquette() {
+    const randomSnack = snacks[Math.floor(Math.random() * snacks.length)];
+    croquetteList.push(randomSnack);
+    renderAscii();
+  }
+
+  // premier affichage
+  renderAscii();
+
+  // ajoute une croquette toutes les heures (ici 5s pour tester)
+  setInterval(addCroquette, 3600000); // 1h = 3600000 ms
+</script>
