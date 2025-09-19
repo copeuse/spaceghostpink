@@ -154,7 +154,22 @@ async function updateRadioInfo() {
 // Lance une première fois au chargement
 updateRadioInfo();
 
-// Puis toutes les 30s
+// --- mise à jour des listeners ---
+try {
+  const statusRes = await fetch("https://radio.spaceghost.pink/status-json.xsl");
+  const statusData = await statusRes.json();
+  const source = statusData.icestats.source;
+
+  let listeners = source.listeners ?? 0;
+  document.getElementById("current-listeners").innerHTML =
+    `${listeners} listener${listeners === 1 ? "" : "s"} ${listeners >= 2 ? "<a href='https://web.libera.chat/?channels=#idasay' target='_blank'>Maybe you’d like to chat all together?</a>" : ""}`;
+} catch (err) {
+  console.warn("Impossible de récupérer les listeners :", err);
+  document.getElementById("current-listeners").textContent = "Loading listeners...";
+}
+
+
+// Puis toutes les 10s
 setInterval(updateRadioInfo, 10000);
 
 </script>
