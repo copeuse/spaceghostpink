@@ -128,8 +128,9 @@ It's a moment, a moment that I invite you to experience together, before it disa
   // refresh toutes les 10s
   setInterval(updateInfo, 10000);
 </script>
-
 <script>
+  let currentMode = "normal"; // "normal" ou "dj"
+
   async function updateDjInfo() {
     const now = new Date();
     const parisTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
@@ -138,7 +139,8 @@ It's a moment, a moment that I invite you to experience together, before it disa
     const target = document.getElementById("info-block");
     if (!target) return;
 
-    if (hour === 18 || hour === 19) {
+    // Vérifie si on doit être en mode DJ
+    if (hour === 23 || hour === 0) {
       try {
         const res = await fetch("https://radio.spaceghost.pink/dj/info.json", { cache: "no-store" });
         if (!res.ok) throw new Error("JSON introuvable");
@@ -146,36 +148,38 @@ It's a moment, a moment that I invite you to experience together, before it disa
         const data = await res.json();
 
         if (data && data.pseudo && data.reseaux && data.texte) {
-          // JSON valide → mode DJ
-          target.innerHTML = `
-            <h3><a href="${data.reseaux}" target="_blank">${data.pseudo}</a></h3>
-            <p>${data.texte}</p>
-          `;
-          return; // stop ici, ne pas remettre le bloc normal
+          if (currentMode !== "dj") {
+            // bascule en mode DJ seulement si on n'y est pas déjà
+            target.innerHTML = `
+              <h3><a href="${data.reseaux}" target="_blank">${data.pseudo}</a></h3>
+              <p>${data.texte}</p>
+            `;
+            currentMode = "dj";
+          }
+          return;
         }
       } catch (err) {
         console.warn("Erreur JSON DJ info :", err);
       }
     }
 
-    // Par défaut → mode normal
-    target.innerHTML = `
-      <p id="current-title">Loading...</p>
-      <a id="cover-link" href="#" target="_blank" style="display:none;">
-        <img id="cover" src="" alt="Current cover">
-      </a>
-    `;
-
-    // Relance updateInfo pour remettre les données titre/cover
-    updateInfo();
+    // Mode normal
+    if (currentMode !== "normal") {
+      target.innerHTML = `
+        <p id="current-title">Loading...</p>
+        <a id="cover-link" href="#" target="_blank" style="display:none;">
+          <img id="cover" src="" alt="Current cover">
+        </a>
+      `;
+      updateInfo(); // recharge titre + cover
+      currentMode = "normal";
+    }
   }
 
-  // vérifie toutes les 10s
+  // appel direct puis toutes les 10s
   updateDjInfo();
   setInterval(updateDjInfo, 10000);
 </script>
-
-
 
 </body>
 </html>
