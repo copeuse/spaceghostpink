@@ -76,7 +76,6 @@ It's a moment, a moment that I invite you to experience together, before it disa
  　＼二つ</p>
 
 <script>
-  
 async function updateRadioInfo() {
   const normalBlock = document.getElementById("normal-mode");
   const djBlock = document.getElementById("dj-mode");
@@ -85,9 +84,9 @@ async function updateRadioInfo() {
   const parisTime = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
   const hour = parisTime.getHours();
 
-  // Vérifie si créneau DJ (23h–0h)
   const isDjHour = (hour === 22 || hour === 23);
 
+  // --- bloc DJ ---
   if (isDjHour) {
     try {
       const res = await fetch("https://radio.spaceghost.pink/dj/info.json", { cache: "no-store" });
@@ -101,7 +100,11 @@ async function updateRadioInfo() {
 
           normalBlock.style.display = "none";
           djBlock.style.display = "block";
-          return; // on s’arrête là → mode DJ actif
+
+          // --- listeners ---
+          await updateListeners();
+
+          return;
         }
       }
     } catch (err) {
@@ -109,7 +112,7 @@ async function updateRadioInfo() {
     }
   }
 
-  // Sinon → mode normal
+  // --- mode normal ---
   try {
     const nowRes = await fetch("https://radio.spaceghost.pink/np/nowplaying.json");
     const nowData = await nowRes.json();
@@ -121,17 +124,15 @@ async function updateRadioInfo() {
     const trackUrl = nowData.url || "#";
     const coverUrl = nowData.cover || "";
 
-    // récup titre
+    // titre
     let title = source.title || "No title";
     title = title.replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(code));
 
-    // maj du titre cliquable
     const titleEl = document.getElementById("current-title");
     titleEl.innerHTML = `<a href="${trackUrl}" target="_blank">♫ ${title} ♫</a>`;
-
     document.title = `♫ ${title} ♫ - INTERNET IS DYING AND SO ARE YOU`;
 
-    // maj de la cover
+    // cover
     const coverImg = document.getElementById("cover");
     const coverLink = document.getElementById("cover-link");
     if (coverUrl) {
@@ -142,34 +143,40 @@ async function updateRadioInfo() {
       coverLink.style.display = "none";
     }
 
+    normalBlock.style.display = "block";
+    djBlock.style.display = "none";
+
+    // --- listeners ---
+    await updateListeners();
+
   } catch (error) {
     console.error("Erreur :", error);
-    document.getElementById("current-title").textContent = "Impossible to fetch title";
+    const titleEl = document.getElementById("current-title");
+    if (titleEl) titleEl.textContent = "Impossible to fetch title";
   }
-
-  normalBlock.style.display = "block";
-  djBlock.style.display = "none";
 }
 
-// Lance une première fois au chargement
+// --- fonction séparée pour listeners ---
+async function updateListeners() {
+  try {
+    const statusRes = await fetch("https://radio.spaceghost.pink/status-json.xsl");
+    const statusData = await statusRes.json();
+    const source = statusData.icestats.source;
+
+    let listeners = source.listeners ?? 0;
+    document.getElementById("current-listeners").innerHTML =
+      `${listeners} listener${listeners === 1 ? "" : "s"} ${listeners >= 2 ? "<a href='https://web.libera.chat/?channels=#idasay' target='_blank'>Maybe you’d like to chat all together?</a>" : ""}`;
+  } catch (err) {
+    console.warn("Impossible de récupérer les listeners :", err);
+    const el = document.getElementById("current-listeners");
+    if (el) el.textContent = "Loading listeners...";
+  }
+}
+
+// premier lancement
 updateRadioInfo();
 
-// --- mise à jour des listeners ---
-try {
-  const statusRes = await fetch("https://radio.spaceghost.pink/status-json.xsl");
-  const statusData = await statusRes.json();
-  const source = statusData.icestats.source;
-
-  let listeners = source.listeners ?? 0;
-  document.getElementById("current-listeners").innerHTML =
-    `${listeners} listener${listeners === 1 ? "" : "s"} ${listeners >= 2 ? "<a href='https://web.libera.chat/?channels=#idasay' target='_blank'>Maybe you’d like to chat all together?</a>" : ""}`;
-} catch (err) {
-  console.warn("Impossible de récupérer les listeners :", err);
-  document.getElementById("current-listeners").textContent = "Loading listeners...";
-}
-
-
-// Puis toutes les 10s
+// toutes les 10s
 setInterval(updateRadioInfo, 10000);
 
 </script>
