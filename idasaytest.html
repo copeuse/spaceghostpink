@@ -157,7 +157,7 @@ It's a moment, a moment that I invite you to experience together, before it disa
     if (djMode) return;
 
     // Seulement si on est à 23h
-    if (hour === 19 || hour === 20) {
+    if (hour === 21 || hour === 22) {
       try {
         const res = await fetch("https://radio.spaceghost.pink/dj/info.json", { cache: "no-store" });
         if (!res.ok) {
