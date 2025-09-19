@@ -1,3 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>INTERNET IS DYING AND SO ARE YOU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: "Source Code Pro", monospace;
+      font-weight: 400;
+      text-align: center;
+      padding: 50px;
+      background: #fdf0f5;
+    }
+    audio {
+      width: 300px;
+    }
+    #cover {
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>INTERNET IS DYING AND SO ARE YOU</h1>
+  <h3>may not work atm sryy i was trying to implement a new feature and broke everything if u read this im sorry... // supposedly curated by <a href="https://n2v2.bandcamp.com" target="_blank">névé</a>, <a href="https://thanas1.bandcamp.com" target="_blank">louisæ</a>, <a href="https://score16.bandcamp.com" target="_blank">score16</a>, <a href="https://mathildab.bandcamp.com" target="_blank">mathilda b</a> and <a href="https://soundcloud.com/labtoxin" target="_blank">labtoxin</a></h3>
+  <h4>track selection changes based on the hour, paris time. new tracks are added every day</h4>
+  <!-- Le lecteur audio -->
+  <audio controls preload="none" style="margin: 25px">
+    <source src="https://radio.spaceghost.pink/idasay.mp3" type="audio/mpeg">
+    HTML5 audio not supported by your browser.
+  </audio>
+  
+  <div id="info-block">
+    <p id="current-title">Loading...</p>
+    <a id="cover-link" href="#" target="_blank" style="display:none;">
+      <img id="cover" src="" alt="Current cover">
+    </a>
+  </div>
+  
+  <p id="current-listeners">Loading listeners...</p>
+
+  <p style="text-align: left; white-space: pre; margin-top: 125px;">This page is under construction, <a href="https://github.com/copeuse/IIDASAY" target="_blank">any help is welcome!</a></p> 
+  <p style="text-align: start; font-size: x-small; margin-left: 525px; margin-top: 225px;"> I grew up with the feeling that the internet was immortal, yet <a href="https://en.wikipedia.org/wiki/Link_rot" target="_blank">the web is dying, and has been since its birth</a>.
+His aging has been accelerated by the centralization of its content and activities. <a href="https://youtu.be/oYlcUbLAFmw?si=oB7WZe4J3h9eEUJ9" target="_blank">The internet once had many doors; today, it's just one big room</a>.
+The fact that different powers control this room is nothing new. Whether to <a href="https://en.wikipedia.org/wiki/Cambridge_Analytica" target="_blank">seize power</a> or <a href="https://www.instagram.com/p/DOdvj39gMLm/?img_index=1" target="_blank">erase their crimes</a>, they have repeatedly proven how they can easily abuse the situation to enforce their fascist policies.
+It is therefore no surprise that France, claiming to protect children from pornography, voted for a <a href="https://fightchatcontrol.eu/" target="_blank">European bill aimed at authorizing the use of AI for remote mass surveillance</a>.
+How can all this be implemented? Probably through <a href="https://en.wikipedia.org/wiki/Paragon_Solutions" target="_blank">malware supplied by Israel</a>, or through <a href="https://www.instagram.com/p/DOdvj39gMLm/?img_index=1" target="_blank">collusion between the government and Google</a>. 
+The last bastions of internet freedom are dying before our very eyes: <a href="https://www.bbc.com/news/articles/cjr11qqvvwlo" target="_blank">the end of Wikipedia in the United Kingdom</a>, <a href="https://www.enworld.org/threads/itch-io-is-shadowbanning-or-deleting-nsfw-and-lgbtq-content.714500/" target="_blank">the suppression of LGBT art</a>, <a href="https://www.laquadrature.net/2025/03/18/le-gouvernement-pret-a-tout-pour-casser-le-droit-au-chiffrement/" target="_blank">the destruction of anonymous spaces on the internet</a>...
+censorship is already a reality, and its impact is undeniable. Faced with this reality, there are different ways forward, and fighting is obviously one of them. 
+But I won't dwell on how to fight. I think fighting can manifest itself in many ways, 
+and I invite anyone reading these lines to discuss it with their friends and family, to understand their needs, their expectations, their desires, 
+with the aim of being able to continue communicating with those you care about, as well as those we know nothing about, and to preserve knowledge in order to be able to pass it on.</p>
+  <p style="text-align: start; font-size: x-small; margin-left: 525px;"><a href="https://internet-is-dying-and-so-are-you.com/">INTERNET-IS-DYING-AND-SO-ARE-YOU.COM</a> is an opensource webradio with a basic chat system, both built with very simple tools. It's an ode to the ephemeral, to the punk movement, and to early internet days.
+A webradio springs to life, lives, and dies. It's impossible to archive it. If no one listens to it, it no longer truly exists. 
+It's a moment, a moment that I invite you to experience together, before it disappears forever.</p>
+  <p style="text-align: left; white-space: pre; margin-top: 250px;"> 　　　　  /￣＞￣￣フ Idasay triste car no croquettes......
+ 　　　　　| 　_　 _l  
+ 　 　　　／` ミ＿xノ 
+　　 　  / 　　   |        QU'ON LUI SERVE SES CROQUETTES ET VITE! 
+　　 　 /  ヽ  　 ﾉ 
+ 　 　 /　　|　|　| 
+ 　／￣|    |　|　|    
+　| (￣ヽ＿__ヽ_)__)     \＿＿/ <-- bol vide!! (╬ Ò﹏Ó)
+ 　＼二つ</p>
+
+<script>
+  // Fonction pour convertir les entités Unicode en caractères
+  function decodeUnicodeEntities(str) {
+    return str.replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(code));
+  }
+
+  async function updateInfo() {
+    try {
+      // --- Récup infos titre et listeners ---
+      const statusRes = await fetch("https://radio.spaceghost.pink/status-json.xsl");
+      const statusData = await statusRes.json();
+      const source = statusData.icestats.source;
+
+      // récup titre
+      let title = source.title || "No title";
+      title = decodeUnicodeEntities(title);
+
+      // récup listeners
+      let listeners = source.listeners ?? 0;
+      document.getElementById("current-listeners").innerHTML =
+        `${listeners} listener${listeners <= 1 ? "" : "s"} ${listeners >= 2 ? "<a href='https://web.libera.chat/?channels=#idasay' target='_blank'>Maybe you’d like to chat all together?</a>" : ""}`;
+
+
+      // --- Récup infos nowplaying (url + cover) ---
+      const nowRes = await fetch("https://radio.spaceghost.pink/np/nowplaying.json");
+      const nowData = await nowRes.json();
+
+      const trackUrl = nowData.url || "#";
+      const coverUrl = nowData.cover || "";
+
+      // maj du titre cliquable
+      const titleEl = document.getElementById("current-title");
+      titleEl.innerHTML = `<a href="${trackUrl}" target="_blank">♫ ${title} ♫</a>`;
+
+      document.title = `♫ ${title} ♫ - INTERNET IS DYING AND SO ARE YOU`;
+
+      // maj de la cover
+      const coverImg = document.getElementById("cover");
+      const coverLink = document.getElementById("cover-link");
+      if (coverUrl) {
+        coverImg.src = coverUrl + "?t=" + new Date().getTime();
+        coverLink.href = trackUrl;
+        coverLink.style.display = "inline-block";
+      } else {
+        coverLink.style.display = "none";
+      }
+
+    } catch (error) {
+      console.error("Erreur :", error);
+      document.getElementById("current-title").textContent = "Impossible to fetch title";
+      document.getElementById("current-listeners").textContent = "Impossible to fetch listeners";
+    }
+  }
+
+  // premier appel
+  updateInfo();
+
+  // refresh toutes les 10s
+  setInterval(updateInfo, 10000);
+</script>
+
 <script>
   let djMode = false; // garde l'état (normal / DJ)
 
@@ -38,3 +169,7 @@
   updateDjInfo();
   setInterval(updateDjInfo, 30000);
 </script>
+
+
+</body>
+</html>
