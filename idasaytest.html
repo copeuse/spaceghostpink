@@ -153,41 +153,49 @@ It's a moment, a moment that I invite you to experience together, before it disa
     const target = document.getElementById("info-block");
     if (!target) return;
 
-    // Si déjà en mode DJ → on ne touche plus à rien
-    if (djMode) return;
-
     // Seulement si on est à 21h ou 22h
     if (hour === 21 || hour === 22) {
       try {
         const res = await fetch("https://radio.spaceghost.pink/dj/info.json", { cache: "no-store" });
 
         if (!res.ok) {
-          // fichier manquant ou erreur HTTP → fallback sur titre classique
-          updateTitle();
+          // JSON absent → retour au titre normal
+          if (djMode) {
+            djMode = false;
+            updateTitle();
+          }
           return;
         }
 
         const data = await res.json();
 
         if (data && data.pseudo && data.reseaux && data.texte) {
-          // JSON valide → on bascule en mode DJ
+          // JSON valide → affichage mode DJ
           target.innerHTML = `
             <h3><a href="${data.reseaux}" target="_blank">${data.pseudo}</a></h3>
             <p>${data.texte}</p>
           `;
-          djMode = true; // verrouillage
+          djMode = true;
         } else {
-          // JSON vide ou incomplet → fallback
-          updateTitle();
+          // JSON vide/incomplet → retour au titre normal
+          if (djMode) {
+            djMode = false;
+            updateTitle();
+          }
         }
       } catch (err) {
         console.warn("Erreur JSON DJ info :", err);
-        // erreur de parsing ou fetch → fallback
-        updateTitle();
+        if (djMode) {
+          djMode = false;
+          updateTitle();
+        }
       }
     } else {
-      // En dehors de 21-22h → toujours le titre normal
-      updateTitle();
+      // En dehors des heures → titre normal
+      if (djMode) {
+        djMode = false;
+        updateTitle();
+      }
     }
   }
 
@@ -195,6 +203,7 @@ It's a moment, a moment that I invite you to experience together, before it disa
   updateDjInfo();
   setInterval(updateDjInfo, 5000);
 </script>
+
 
 </body>
 </html>
